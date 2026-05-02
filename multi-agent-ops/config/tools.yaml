@@ -1,0 +1,46 @@
+# Multi-Agent Ops — Tool Registry Configuration
+
+tools:
+  file_read:
+    enabled: true
+    description: "读取文件内容"
+    category: "file"
+    max_file_size_mb: 10
+
+  file_write:
+    enabled: true
+    description: "写入文件"
+    category: "file"
+    max_file_size_mb: 50
+
+  file_list:
+    enabled: true
+    description: "列出目录文件"
+    category: "file"
+
+  web_search:
+    enabled: true
+    description: "网络搜索（使用DuckDuckGo）"
+    category: "web"
+    max_results: 10
+
+  web_fetch:
+    enabled: true
+    description: "获取网页内容"
+    category: "web"
+    timeout_seconds: 30
+
+  shell:
+    enabled: true
+    description: "执行Shell命令"
+    category: "system"
+    timeout_seconds: 60
+    allowed_commands: ["ls", "dir", "cat", "head", "tail", "wc", "find", "grep", "python", "python3", "echo", "date", "pwd", "which"]
+    sandbox: true
+
+  python_exec:
+    enabled: true
+    description: "执行Python代码片段"
+    category: "code"
+    timeout_seconds: 30
+    sandbox: true

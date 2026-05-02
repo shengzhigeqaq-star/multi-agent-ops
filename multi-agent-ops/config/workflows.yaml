@@ -1,0 +1,102 @@
+# Multi-Agent Ops — Pre-defined Workflow Templates
+
+workflows:
+  # 通用报告生成工作流
+  report_generation:
+    name: "报告生成"
+    description: "搜索信息并生成结构化报告"
+    steps:
+      - id: "plan"
+        agent: "planner"
+        description: "分析报告需求，制定大纲"
+      - id: "research"
+        agent: "executor"
+        depends_on: ["plan"]
+        description: "搜索和收集相关信息"
+        tools: ["web_search", "web_fetch"]
+      - id: "draft"
+        agent: "executor"
+        depends_on: ["research"]
+        description: "根据收集的信息撰写报告初稿"
+      - id: "review"
+        agent: "reviewer"
+        depends_on: ["draft"]
+        description: "审核报告质量"
+      - id: "finalize"
+        agent: "coordinator"
+        depends_on: ["review"]
+        description: "汇总生成最终报告"
+
+  # 数据分析工作流
+  data_analysis:
+    name: "数据分析"
+    description: "对数据文件进行分析并生成洞察"
+    steps:
+      - id: "plan"
+        agent: "planner"
+        description: "分析需求，制定分析方案"
+      - id: "explore"
+        agent: "executor"
+        depends_on: ["plan"]
+        description: "探索数据结构"
+        tools: ["file_read", "python_exec", "shell"]
+      - id: "analyze"
+        agent: "executor"
+        depends_on: ["explore"]
+        description: "执行数据分析"
+        tools: ["python_exec"]
+      - id: "review"
+        agent: "reviewer"
+        depends_on: ["analyze"]
+        description: "审核分析结果"
+      - id: "finalize"
+        agent: "coordinator"
+        depends_on: ["review"]
+        description: "汇总分析报告"
+
+  # 代码审查工作流
+  code_review:
+    name: "代码审查"
+    description: "对代码进行多维度审查"
+    steps:
+      - id: "read_code"
+        agent: "executor"
+        description: "读取待审查代码"
+        tools: ["file_read", "file_list"]
+      - id: "review_quality"
+        agent: "reviewer"
+        depends_on: ["read_code"]
+        description: "审查代码质量、规范、安全性"
+      - id: "review_perf"
+        agent: "reviewer"
+        depends_on: ["read_code"]
+        description: "审查性能问题"
+      - id: "summarize"
+        agent: "coordinator"
+        depends_on: ["review_quality", "review_perf"]
+        description: "汇总审查意见"
+
+  # 多轮对话协作工作流
+  collaborative_discussion:
+    name: "协作讨论"
+    description: "多个Agent围绕主题进行多轮深度讨论"
+    steps:
+      - id: "initiate"
+        agent: "coordinator"
+        description: "发起讨论，明确议题"
+      - id: "round_1"
+        agent: "executor"
+        depends_on: ["initiate"]
+        description: "第一轮：提出观点和分析"
+      - id: "review_1"
+        agent: "reviewer"
+        depends_on: ["round_1"]
+        description: "第一轮：审查和挑战观点"
+      - id: "round_2"
+        agent: "executor"
+        depends_on: ["review_1"]
+        description: "第二轮：回应质疑，深化分析"
+      - id: "synthesize"
+        agent: "coordinator"
+        depends_on: ["round_2"]
+        description: "综合各方观点，形成最终结论"
